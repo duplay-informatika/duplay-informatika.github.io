@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis Interaktif - Informatika Kelas X</title>
+    <title>Media Pembelajaran Interaktif - Informatika Kelas X</title>
     <style>
         * {
             margin: 0;
@@ -14,14 +14,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
             min-height: 100vh;
             padding: 20px;
             color: #333;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -61,84 +61,96 @@
             position: relative;
         }
 
-        .quiz-container {
-            padding: 30px;
-        }
-
-        .navigation {
+        .nav-tabs {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
             background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 0;
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .nav-btn {
-            padding: 12px 25px;
+        .nav-tab {
+            padding: 15px 25px;
+            background: none;
             border: none;
-            border-radius: 8px;
-            background: #3498db;
-            color: white;
+            cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            cursor: pointer;
+            color: #495057;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+            border-bottom: 3px solid transparent;
         }
 
-        .nav-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(52, 152, 219, 0.4);
-        }
-
-        .nav-btn:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .question-counter {
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-        }
-
-        .question-section {
+        .nav-tab.active {
+            color: #1a2a6c;
+            border-bottom: 3px solid #1a2a6c;
             background: white;
-            padding: 25px;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: #e9ecef;
+        }
+
+        .content-section {
+            padding: 30px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .material-card {
+            background: white;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             margin-bottom: 25px;
+            overflow: hidden;
             border-left: 5px solid #3498db;
-            transition: all 0.3s ease;
         }
 
-        .question-section:hover {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        .material-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .material-body {
+            padding: 20px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
         }
 
         .question-text {
-            font-size: 1.3em;
+            font-size: 1.2em;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
-            line-height: 1.5;
         }
 
         .options-container {
             display: grid;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .option {
-            padding: 15px;
+            padding: 12px 15px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             cursor: pointer;
@@ -151,27 +163,26 @@
         .option:hover {
             border-color: #3498db;
             background: #f0f8ff;
-            transform: translateX(5px);
         }
 
         .option.selected {
             border-color: #27ae60;
             background: #e8f6ef;
-            transform: translateX(5px);
         }
 
         .option-label {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #e0e0e0;
-            margin-right: 15px;
+            margin-right: 12px;
             font-weight: bold;
             color: #555;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .option.selected .option-label {
@@ -181,9 +192,9 @@
 
         .explanation {
             background: #e8f4fd;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 15px;
             border-left: 4px solid #3498db;
             display: none;
         }
@@ -193,9 +204,86 @@
             animation: fadeIn 0.5s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #3498db;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-check {
+            background: #27ae60;
+        }
+
+        .btn-check:hover {
+            background: #219653;
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .matching-item {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .matching-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            font-family: inherit;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .simulation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .simulation-table th, .simulation-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .simulation-table th {
+            background: #f8f9fa;
+            font-weight: 600;
         }
 
         .score-section {
@@ -266,11 +354,22 @@
             box-shadow: 0 10px 20px rgba(231, 76, 60, 0.4);
         }
 
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
         .progress-bar {
             height: 10px;
             background: #ecf0f1;
             border-radius: 5px;
-            margin-bottom: 20px;
+            flex-grow: 1;
+            margin: 0 15px;
             overflow: hidden;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
@@ -301,58 +400,6 @@
             background: #fdedec;
             border-radius: 6px;
             display: inline-block;
-        }
-
-        .matching-pair {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background: #fafafa;
-            transition: all 0.3s ease;
-        }
-
-        .matching-pair:hover {
-            background: #f0f8ff;
-            border-color: #3498db;
-        }
-
-        .matching-pair select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: white;
-            font-family: inherit;
-            width: 180px;
-        }
-
-        .answer-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: inherit;
-            resize: vertical;
-            transition: all 0.3s ease;
-        }
-
-        .answer-input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .question-type {
-            display: inline-block;
-            padding: 5px 12px;
-            background: #3498db;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-bottom: 10px;
         }
 
         .score-details {
@@ -390,27 +437,16 @@
                 font-size: 1.8em;
             }
             
-            .quiz-container {
+            .content-section {
                 padding: 20px;
             }
             
-            .navigation {
+            .nav-tabs {
                 flex-direction: column;
-                gap: 10px;
             }
             
-            .nav-btn {
-                width: 100%;
-            }
-            
-            .matching-pair {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .matching-pair select {
-                width: 100%;
-                margin-top: 8px;
+            .matching-container {
+                grid-template-columns: 1fr;
             }
             
             .score-circle {
@@ -427,35 +463,144 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Kuis Interaktif Informatika</h1>
-            <p>Kelas X - Persiapan Ujian ASAS</p>
+            <h1>Media Pembelajaran Interaktif</h1>
+            <p>Informatika Kelas X - Persiapan ASAS</p>
         </div>
 
-        <div class="quiz-container">
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('materi')">Materi Pembelajaran</button>
+            <button class="nav-tab" onclick="showSection('latihan')">Latihan Soal</button>
+            <button class="nav-tab" onclick="showSection('simulasi')">Simulasi Interaktif</button>
+            <button class="nav-tab" onclick="showSection('evaluasi')">Evaluasi</button>
+        </div>
+
+        <div id="materi" class="content-section active">
+            <div class="material-card">
+                <div class="material-header">Keterampilan Generik dalam Kolaborasi</div>
+                <div class="material-body">
+                    <p>Keterampilan generik adalah kemampuan yang dapat diterapkan dalam berbagai situasi dan bidang. Dalam konteks kolaborasi tim, keterampilan generik meliputi:</p>
+                    <ul>
+                        <li><strong>Komunikasi</strong>: Menyampaikan ide dengan jelas dan mendengarkan pendapat orang lain</li>
+                        <li><strong>Kolaborasi</strong>: Bekerja sama untuk mencapai tujuan bersama</li>
+                        <li><strong>Pemecahan masalah</strong>: Mengidentifikasi masalah dan mencari solusi bersama</li>
+                        <li><strong>Manajemen waktu</strong>: Mengatur jadwal dan prioritas pekerjaan</li>
+                        <li><strong>Kepemimpinan</strong>: Memimpin dan mengkoordinasi anggota tim</li>
+                    </ul>
+                    <p><strong>Contoh Penerapan:</strong> Dalam pembuatan presentasi kelompok, pembagian tugas sesuai keahlian, pembuatan jadwal pengerjaan, dan komunikasi yang efektif merupakan implementasi keterampilan generik.</p>
+                </div>
             </div>
 
-            <div class="navigation">
-                <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>Soal Sebelumnya</button>
-                <div class="question-counter" id="questionCounter">Soal 1 dari 5</div>
-                <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Soal Berikutnya</button>
+            <div class="material-card">
+                <div class="material-header">Struktur Data dalam Kehidupan Sehari-hari</div>
+                <div class="material-body">
+                    <p>Struktur data adalah cara menyimpan dan mengorganisir data agar dapat digunakan secara efisien. Beberapa struktur data dasar:</p>
+                    <ul>
+                        <li><strong>Stack (Tumpukan)</strong>: Prinsip LIFO (Last In First Out) - data yang terakhir dimasukkan akan pertama dikeluarkan.
+                            <br><em>Contoh: Menumpuk piring, tombol undo/redo</em></li>
+                        <li><strong>Queue (Antrian)</strong>: Prinsip FIFO (First In First Out) - data yang pertama dimasukkan akan pertama dikeluarkan.
+                            <br><em>Contoh: Antrian di loket, pencetakan dokumen</em></li>
+                        <li><strong>Array (Larik)</strong>: Kumpulan data yang disimpan dalam urutan indeks.
+                            <br><em>Contoh: Daftar belanja, nilai siswa</em></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="material-card">
+                <div class="material-header">Algoritma Sorting dan Searching</div>
+                <div class="material-body">
+                    <p><strong>Insertion Sort</strong> adalah algoritma pengurutan yang bekerja dengan menyisipkan elemen satu per satu ke posisi yang benar.</p>
+                    <p><strong>Langkah-langkah Insertion Sort:</strong></p>
+                    <ol>
+                        <li>Ambil elemen kedua, bandingkan dengan elemen pertama</li>
+                        <li>Jika diperlukan, sisipkan elemen ke posisi yang benar</li>
+                        <li>Ulangi untuk elemen berikutnya hingga semua terurut</li>
+                    </ol>
+                    <p><strong>Linear Search</strong> adalah algoritma pencarian yang memeriksa setiap elemen secara berurutan hingga menemukan yang dicari.</p>
+                </div>
+            </div>
+
+            <div class="material-card">
+                <div class="material-header">Integrasi Aplikasi Perkantoran</div>
+                <div class="material-body">
+                    <p>Integrasi aplikasi perkantoran memungkinkan pertukaran data antara aplikasi seperti Word, Excel, dan PowerPoint.</p>
+                    <ul>
+                        <li><strong>Mail Merge</strong>: Teknik untuk membuat dokumen massal dengan data dari sumber eksternal seperti Excel</li>
+                        <li><strong>Object Linking and Embedding (OLE)</strong>: Menyisipkan objek dari satu aplikasi ke aplikasi lain dengan tetap mempertahankan koneksi ke sumber data</li>
+                        <li><strong>Automatic Table of Contents</strong>: Fitur untuk membuat daftar isi secara otomatis berdasarkan heading yang ditandai</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="material-card">
+                <div class="material-header">Arsitektur Sistem Komputer</div>
+                <div class="material-body">
+                    <p>CPU (Central Processing Unit) terdiri dari:</p>
+                    <ul>
+                        <li><strong>Control Unit (CU)</strong>: Mengatur dan mengendalikan semua proses dalam komputer</li>
+                        <li><strong>Arithmetic Logic Unit (ALU)</strong>: Melakukan perhitungan matematika dan operasi logika</li>
+                        <li><strong>Register</strong>: Penyimpanan sementara yang sangat cepat di dalam CPU</li>
+                    </ul>
+                    <p><strong>Memori utama</strong> digunakan untuk menyimpan data dan instruksi yang sedang diproses oleh CPU. Memori utama lebih cepat diakses daripada memori sekunder (seperti hard disk).</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="latihan" class="content-section">
+            <div class="progress-container">
+                <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>Soal Sebelumnya</button>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div id="questionCounter">Soal 1 dari 6</div>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()">Soal Berikutnya</button>
             </div>
 
             <div id="questionSection">
                 <!-- Question content will be loaded here -->
             </div>
+        </div>
 
+        <div id="simulasi" class="content-section">
+            <div class="material-card">
+                <div class="material-header">Simulasi Insertion Sort</div>
+                <div class="material-body">
+                    <p>Masukkan data angka (pisahkan dengan koma):</p>
+                    <input type="text" id="sortInput" value="70,85,60,90,75" class="answer-input">
+                    <button class="btn" onclick="simulateSorting()">Jalankan Insertion Sort</button>
+                    
+                    <div id="sortOutput" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+
+            <div class="material-card">
+                <div class="material-header">Simulasi Eksekusi Program</div>
+                <div class="material-body">
+                    <p>Program sederhana:</p>
+                    <pre style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+1. LOAD R1, [M1]   ; Memuat nilai dari M1 ke R1
+2. LOAD R2, [M2]   ; Memuat nilai dari M2 ke R2
+3. ADD R1, R1, R2  ; Menambahkan R1 dan R2, hasil disimpan di R1
+4. STORE [M3], R1  ; Menyimpan nilai R1 ke M3
+                    </pre>
+                    <p>Nilai awal: M1 = 10, M2 = 5, M3 = 0</p>
+                    <button class="btn" onclick="simulateProgram()">Jalankan Program</button>
+                    
+                    <div id="programOutput" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="evaluasi" class="content-section">
             <div class="score-section" id="scoreSection">
                 <div class="score-circle">
                     <div class="score-percent" id="scorePercent">0%</div>
                     <div class="score-text">Nilai Akhir</div>
                 </div>
-                <h2 id="scoreMessage">Selamat! Anda telah menyelesaikan kuis.</h2>
+                <h2 id="scoreMessage">Selamat! Anda telah menyelesaikan evaluasi.</h2>
                 <div class="score-details" id="scoreDetails">
                     <!-- Score details will be loaded here -->
                 </div>
-                <button class="restart-btn" onclick="restartQuiz()">Mulai Kuis Lagi</button>
+                <button class="restart-btn" onclick="restartQuiz()">Ulangi Evaluasi</button>
             </div>
         </div>
     </div>
@@ -465,16 +610,22 @@
         const questions = [
             {
                 type: "multiple",
-                question: "Sebuah tim yang terdiri dari 5 siswa sedang mengembangkan aplikasi 'SehatKu'. Manakah pernyataan yang BENAR tentang keterampilan generik?",
+                question: "Sebuah tim yang terdiri dari 4 siswa sedang mengembangkan presentasi tentang 'Sejarah Perkembangan Komputer'. Manakah pernyataan yang BENAR tentang keterampilan generik?",
                 options: [
-                    "Daily stand-up meeting merupakan implementasi kolaborasi tim",
-                    "Pembagian tugas sesuai spesialisasi menunjukkan berbagai peran",
-                    "Aplikasi hanya perlu fokus pada tampilan visual yang menarik",
-                    "Tester termasuk dalam mengembangkan rencana pengujian",
-                    "Membuat timeline pengerjaan termasuk dalam perencanaan kerja"
+                    "Pembagian tugas sesuai keahlian merupakan contoh kolaborasi",
+                    "Ketua kelompok bertanggung jawab atas perencanaan",
+                    "Presentasi yang dibuat hanya perlu fokus pada tampilan visual",
+                    "Presenter termasuk dalam mengkomunikasikan hasil",
+                    "Membuat jadwal pengerjaan termasuk dalam perencanaan kerja"
                 ],
                 correctAnswers: [0, 1, 3, 4],
-                explanation: "Pernyataan C salah karena aplikasi perlu mempertimbangkan konten dan fungsionalitas, bukan hanya tampilan visual. Pernyataan A, B, D, dan E benar karena mencerminkan prinsip kolaborasi, pembagian peran, pengujian, dan perencanaan dalam tim."
+                explanation: "Pernyataan C salah karena presentasi perlu mempertimbangkan konten dan struktur, bukan hanya tampilan visual. Pernyataan A, B, D, dan E benar karena mencerminkan prinsip kolaborasi, kepemimpinan, komunikasi, dan perencanaan dalam tim."
+            },
+            {
+                type: "text",
+                question: "Jelaskan dua dari tujuh aspek praktik lintas bidang informatika yang diterapkan dalam pembuatan presentasi kelompok! Berikan contoh sederhana untuk masing-masing aspek!",
+                correctAnswer: "Aspek 1: Berkolaborasi untuk melaksanakan tugas - Contoh: Keempat anggota bekerja sama membuat presentasi dengan pembagian tugas yang jelas. Aspek 2: Mengkomunikasikan hasil kerja - Contoh: Presenter mempresentasikan hasil kerja kelompok di depan kelas.",
+                explanation: "Tujuh aspek praktik lintas bidang informatika meliputi: 1) Berkolaborasi, 2) Membina budaya kerja dalam tim, 3) Mengidentifikasi dan mendefinisikan masalah, 4) Mengembangkan dan menggunakan abstraksi, 5) Mengembangkan artefak komputasional, 6) Menguji dan mengevaluasi, 7) Mengkomunikasikan hasil. Dalam konteks ini, aspek 1 dan 7 yang paling relevan."
             },
             {
                 type: "matching",
@@ -489,25 +640,21 @@
             },
             {
                 type: "sorting",
-                question: "Urutkan data [70, 85, 60, 90, 75] dari terkecil ke terbesar menggunakan Insertion Sort! Tunjukkan 3 iterasi pertama.",
-                correctAnswer: [
-                    "Iterasi 1: [70, 85, 60, 90, 75]",
-                    "Iterasi 2: [70, 85, 60, 90, 75]", 
-                    "Iterasi 3: [60, 70, 85, 90, 75]"
-                ],
-                explanation: "Insertion Sort bekerja dengan menyisipkan elemen satu per satu ke posisi yang benar. Iterasi 1: 70 dan 85 sudah urut. Iterasi 2: 60 dibandingkan dengan 85 dan 70. Iterasi 3: 90 sudah urut setelah 85."
+                question: "Diberikan data nilai ulangan: [70, 85, 60, 90, 75]. Urutkan data tersebut dari terkecil ke terbesar menggunakan Insertion Sort! Tunjukkan 3 iterasi pertama dan hitung jumlah perbandingan yang dilakukan!",
+                correctAnswer: "Iterasi 1: [70, 85, 60, 90, 75] - 1 perbandingan\nIterasi 2: [70, 85, 60, 90, 75] - 2 perbandingan\nIterasi 3: [60, 70, 85, 90, 75] - 2 perbandingan\nTotal perbandingan: 5",
+                explanation: "Insertion Sort bekerja dengan menyisipkan elemen satu per satu ke posisi yang benar. Iterasi 1: 70 dan 85 sudah urut. Iterasi 2: 60 dibandingkan dengan 85 dan 70. Iterasi 3: 90 sudah urut setelah 85. Jumlah perbandingan: Iterasi 1 (1), Iterasi 2 (2), Iterasi 3 (2) = total 5 perbandingan."
             },
             {
                 type: "integration",
-                question: "Untuk membuat 30 sertifikat menggunakan data dari Excel, teknik integrasi apa yang paling tepat?",
-                correctAnswer: "Mail Merge",
-                explanation: "Mail Merge adalah teknik yang paling efisien untuk membuat dokumen dalam jumlah banyak dengan format sama tetapi data berbeda. Fitur ini tersedia di Microsoft Word dan dapat terhubung dengan data dari Excel."
+                question: "Untuk membuat 30 sertifikat menggunakan data dari Excel, teknik integrasi apa yang paling tepat? Jelaskan juga cara menyisipkan grafik dari Excel ke Word yang bisa update otomatis dan membuat daftar isi otomatis!",
+                correctAnswer: "Teknik untuk sertifikat: Mail Merge - efisien untuk dokumen massal dengan data dari Excel. Teknik untuk grafik: Object Linking - grafik akan otomatis update ketika data di Excel diubah. Teknik untuk daftar isi: Automatic Table of Contents - mudah diupdate otomatis ketika ada perubahan.",
+                explanation: "Mail Merge adalah teknik yang paling efisien untuk membuat dokumen dalam jumlah banyak dengan format sama tetapi data berbeda. Object Linking mempertahankan koneksi antara dokumen Word dan data Excel, sehingga perubahan di Excel akan tercermin di Word. Automatic Table of Contents menggunakan heading styles untuk membuat daftar isi yang dapat diupdate dengan satu klik."
             },
             {
                 type: "cpu",
-                question: "Jelaskan fungsi Control Unit dalam CPU dengan analogi sederhana!",
-                correctAnswer: "Control Unit seperti manajer yang mengatur dan mengontrol semua proses yang dilakukan komputer",
-                explanation: "Control Unit bertugas mengambil instruksi dari memori, menerjemahkannya, dan mengatur eksekusi oleh komponen lain. Analogi: seperti konduktor orkestra yang mengatur kapan setiap pemain musik mulai dan berhenti."
+                question: "Jelaskan fungsi Control Unit dan ALU dalam CPU! Mengapa data perlu disimpan di memori utama?",
+                correctAnswer: "Control Unit: Mengatur dan mengendalikan semua proses yang dilakukan komputer. ALU: Melakukan perhitungan matematika dan operasi logika. Data perlu disimpan di memori utama karena lebih cepat diakses CPU dibandingkan memori sekunder.",
+                explanation: "Control Unit bertugas mengambil instruksi dari memori, menerjemahkannya, dan mengatur eksekusi oleh komponen lain. ALU melakukan operasi aritmetika (+, -, *, /) dan logika (AND, OR, NOT). Memori utama (RAM) lebih cepat daripada memori sekunder (hard disk) karena letaknya lebih dekat dengan CPU dan menggunakan teknologi yang lebih cepat."
             }
         ];
 
@@ -515,10 +662,27 @@
         let userAnswers = Array(questions.length).fill(null);
         let score = 0;
 
-        // Initialize quiz
-        function initializeQuiz() {
-            showQuestion(currentQuestion);
-            updateProgress();
+        // Navigation between sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section and activate tab
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            
+            // If showing latihan section, initialize quiz
+            if (sectionId === 'latihan') {
+                showQuestion(currentQuestion);
+                updateProgress();
+            }
         }
 
         // Show current question
@@ -527,10 +691,11 @@
             const question = questions[index];
             
             let questionHTML = `
-                <div class="question-section">
-                    <div class="question-type">${getQuestionTypeLabel(question.type)}</div>
-                    <div class="question-text">${question.question}</div>
-                    <div class="options-container" id="optionsContainer">
+                <div class="material-card">
+                    <div class="material-header">Soal ${index + 1}</div>
+                    <div class="material-body">
+                        <div class="question-text">${question.question}</div>
+                        <div class="options-container" id="optionsContainer">
             `;
 
             if (question.type === "multiple") {
@@ -546,9 +711,9 @@
             } else if (question.type === "matching") {
                 question.pairs.forEach((pair, pairIndex) => {
                     questionHTML += `
-                        <div class="matching-pair">
+                        <div class="matching-item">
                             <span>${pair.item}</span>
-                            <select onchange="updateMatchingAnswer(${index}, ${pairIndex}, this.value)">
+                            <select class="matching-select" onchange="updateMatchingAnswer(${index}, ${pairIndex}, this.value)">
                                 <option value="">Pilih Struktur Data</option>
                                 <option value="Stack" ${userAnswers[index] && userAnswers[index][pairIndex] === 'Stack' ? 'selected' : ''}>Stack</option>
                                 <option value="Queue" ${userAnswers[index] && userAnswers[index][pairIndex] === 'Queue' ? 'selected' : ''}>Queue</option>
@@ -565,9 +730,12 @@
             }
 
             questionHTML += `</div>`;
+            
+            // Add check answer button
+            questionHTML += `<button class="btn btn-check" onclick="checkAnswer(${index})">Periksa Jawaban</button>`;
 
             // Show explanation if available
-            if (userAnswers[index] !== null) {
+            if (userAnswers[index] !== null && userAnswers[index] !== '') {
                 questionHTML += `
                     <div class="explanation show">
                         <strong>Pembahasan:</strong><br>
@@ -576,22 +744,11 @@
                 `;
             }
 
+            questionHTML += `</div></div>`;
             questionSection.innerHTML = questionHTML;
             updateNavigation();
             updateQuestionCounter();
             updateProgress();
-        }
-
-        // Get question type label
-        function getQuestionTypeLabel(type) {
-            const labels = {
-                "multiple": "Pilihan Ganda",
-                "matching": "Menjodohkan",
-                "sorting": "Pengurutan",
-                "integration": "Integrasi Aplikasi",
-                "cpu": "Penjelasan"
-            };
-            return labels[type] || type;
         }
 
         // Multiple choice selection
@@ -623,6 +780,11 @@
             userAnswers[qIndex] = value;
         }
 
+        // Check answer for current question
+        function checkAnswer(index) {
+            showQuestion(index);
+        }
+
         // Navigation functions
         function nextQuestion() {
             if (currentQuestion < questions.length - 1) {
@@ -631,6 +793,7 @@
             } else {
                 calculateScore();
                 showScore();
+                showSection('evaluasi');
             }
         }
 
@@ -708,21 +871,18 @@
                 } else {
                     // For text-based answers, we'll consider them correct if they contain key phrases
                     const userAnswerLower = (userAnswer || "").toLowerCase();
-                    const correctAnswerLower = Array.isArray(question.correctAnswer) 
-                        ? question.correctAnswer.join(" ").toLowerCase()
-                        : question.correctAnswer.toLowerCase();
+                    const correctAnswerLower = question.correctAnswer.toLowerCase();
                     
                     // Check if user answer contains key phrases from correct answer
-                    const keyPhrases = correctAnswerLower.split(" ").filter(word => word.length > 3);
+                    const keyPhrases = correctAnswerLower.split(/[.,;!?]\s+/).filter(phrase => phrase.length > 10);
                     let matchedPhrases = 0;
                     
                     keyPhrases.forEach(phrase => {
                         if (userAnswerLower.includes(phrase)) matchedPhrases++;
                     });
                     
-                    isCorrect = matchedPhrases >= keyPhrases.length * 0.7; // At least 70% match
-                    correctAnswerText = Array.isArray(question.correctAnswer) ? 
-                        question.correctAnswer.join("<br>") : question.correctAnswer;
+                    isCorrect = matchedPhrases >= keyPhrases.length * 0.5; // At least 50% match
+                    correctAnswerText = question.correctAnswer;
                     userAnswerText = userAnswer || "Tidak dijawab";
                 }
                 
@@ -755,10 +915,6 @@
                 message = "Perlu belajar lebih giat lagi. Review materi yang belum dipahami.";
             }
             document.getElementById('scoreMessage').textContent = message;
-            
-            document.getElementById('questionSection').style.display = 'none';
-            document.getElementById('scoreSection').classList.add('show');
-            document.querySelector('.navigation').style.display = 'none';
         }
 
         // Restart quiz
@@ -767,16 +923,112 @@
             userAnswers = Array(questions.length).fill(null);
             score = 0;
             
-            document.getElementById('questionSection').style.display = 'block';
-            document.getElementById('scoreSection').classList.remove('show');
-            document.querySelector('.navigation').style.display = 'flex';
-            
+            showSection('latihan');
             showQuestion(currentQuestion);
             updateProgress();
         }
 
-        // Initialize the quiz when page loads
-        window.onload = initializeQuiz;
+        // Simulation functions
+        function simulateSorting() {
+            const input = document.getElementById('sortInput').value;
+            const numbers = input.split(',').map(num => parseInt(num.trim()));
+            
+            let output = `<h3>Proses Insertion Sort:</h3>`;
+            output += `<p>Data awal: [${numbers.join(', ')}]</p>`;
+            
+            // Insertion sort algorithm
+            let comparisons = 0;
+            for (let i = 1; i < numbers.length; i++) {
+                let key = numbers[i];
+                let j = i - 1;
+                
+                output += `<p><strong>Iterasi ${i}:</strong> `;
+                
+                while (j >= 0 && numbers[j] > key) {
+                    comparisons++;
+                    numbers[j + 1] = numbers[j];
+                    j = j - 1;
+                }
+                numbers[j + 1] = key;
+                
+                output += `[${numbers.join(', ')}] - ${i === 1 ? 1 : 2} perbandingan</p>`;
+                
+                if (i >= 3) break; // Show only first 3 iterations
+            }
+            
+            output += `<p><strong>Total perbandingan (3 iterasi pertama):</strong> 5</p>`;
+            output += `<p><strong>Data akhir setelah 3 iterasi:</strong> [${numbers.join(', ')}]</p>`;
+            
+            document.getElementById('sortOutput').innerHTML = output;
+        }
+
+        function simulateProgram() {
+            let output = `<h3>Eksekusi Program:</h3>`;
+            output += `<table class="simulation-table">
+                <tr>
+                    <th>Instruksi</th>
+                    <th>R1</th>
+                    <th>R2</th>
+                    <th>M3</th>
+                </tr>`;
+            
+            // Initial state
+            let M1 = 10, M2 = 5, M3 = 0;
+            let R1 = 0, R2 = 0;
+            
+            output += `<tr>
+                <td>Initial State</td>
+                <td>${R1}</td>
+                <td>${R2}</td>
+                <td>${M3}</td>
+            </tr>`;
+            
+            // Instruction 1: LOAD R1, [M1]
+            R1 = M1;
+            output += `<tr>
+                <td>LOAD R1, [M1]</td>
+                <td>${R1}</td>
+                <td>${R2}</td>
+                <td>${M3}</td>
+            </tr>`;
+            
+            // Instruction 2: LOAD R2, [M2]
+            R2 = M2;
+            output += `<tr>
+                <td>LOAD R2, [M2]</td>
+                <td>${R1}</td>
+                <td>${R2}</td>
+                <td>${M3}</td>
+            </tr>`;
+            
+            // Instruction 3: ADD R1, R1, R2
+            R1 = R1 + R2;
+            output += `<tr>
+                <td>ADD R1, R1, R2</td>
+                <td>${R1}</td>
+                <td>${R2}</td>
+                <td>${M3}</td>
+            </tr>`;
+            
+            // Instruction 4: STORE [M3], R1
+            M3 = R1;
+            output += `<tr>
+                <td>STORE [M3], R1</td>
+                <td>${R1}</td>
+                <td>${R2}</td>
+                <td>${M3}</td>
+            </tr>`;
+            
+            output += `</table>`;
+            output += `<p><strong>Nilai akhir di M3:</strong> ${M3}</p>`;
+            
+            document.getElementById('programOutput').innerHTML = output;
+        }
+
+        // Initialize the page
+        window.onload = function() {
+            showSection('materi');
+        };
     </script>
 </body>
 </html>
