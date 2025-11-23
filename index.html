@@ -140,13 +140,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .material-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
         .material-card {
             background: white;
             border-radius: 15px;
@@ -182,8 +175,8 @@
             padding: 20px;
         }
 
-        /* CPU Simulation Styles */
-        .cpu-simulation {
+        /* Simulation Styles */
+        .simulation-container {
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             border-radius: 15px;
             padding: 25px;
@@ -191,7 +184,124 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
-        .cpu-diagram {
+        .simulation-controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .simulation-visual {
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .team-simulation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .team-member {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .team-member.active {
+            border-color: var(--success);
+            background: #e8f6ef;
+            transform: scale(1.05);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin: 0 auto 15px;
+        }
+
+        .structure-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .structure-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            min-width: 150px;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .structure-item.active {
+            border-color: var(--warning);
+            background: #fff3cd;
+            transform: scale(1.1);
+        }
+
+        .structure-icon {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .sorting-visual {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .number-box {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .number-box.active {
+            background: var(--success);
+            transform: scale(1.2);
+        }
+
+        .number-box.comparing {
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        .cpu-simulation {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -211,10 +321,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             border-left: 4px solid var(--primary);
             transition: all 0.3s ease;
-        }
-
-        .component:hover {
-            transform: translateX(5px);
         }
 
         .component.active {
@@ -304,14 +410,6 @@
             margin: 10px 0;
         }
 
-        .control-panel {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-
         .program-code {
             background: #2d3748;
             color: #e2e8f0;
@@ -352,21 +450,6 @@
 
         .code-line.active .line-number {
             color: white;
-        }
-
-        .data-flow {
-            position: absolute;
-            background: var(--success);
-            height: 3px;
-            border-radius: 3px;
-            animation: dataFlow 2s linear;
-            z-index: 10;
-        }
-
-        @keyframes dataFlow {
-            0% { width: 0; opacity: 0; }
-            50% { width: 100%; opacity: 1; }
-            100% { width: 100%; opacity: 0; }
         }
 
         .simulation-status {
@@ -449,7 +532,113 @@
             background: #d1144a;
         }
 
-        /* Responsive Design */
+        /* Question Styles */
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+            position: relative;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: #f0f8ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--success);
+            background: #e8f6ef;
+            transform: translateX(5px);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: #e8f6ef;
+            animation: pulse 1s;
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: #fdedec;
+        }
+
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #555;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-label {
+            background: var(--success);
+            color: white;
+        }
+
+        .explanation {
+            background: #e8f4fd;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary);
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -471,23 +660,16 @@
                 flex-direction: column;
             }
             
-            .cpu-diagram {
+            .cpu-simulation {
                 grid-template-columns: 1fr;
             }
             
-            .register-display {
+            .structure-visual {
                 flex-direction: column;
-                align-items: center;
             }
             
-            .control-panel {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
+            .team-simulation {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -497,83 +679,286 @@
         <div class="header">
             <div class="header-content">
                 <h1><i class="fas fa-laptop-code"></i> Media Pembelajaran Interaktif</h1>
-                <p>Informatika Kelas X - Arsitektur & Simulasi CPU</p>
+                <p>Informatika Kelas X - Simulasi Lengkap Semua Bacaan</p>
             </div>
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showSection('materi')">
-                <i class="fas fa-book"></i> Materi Pembelajaran
+            <button class="nav-tab active" onclick="showSection('bacaan1')">
+                <i class="fas fa-users"></i> Bacaan 1
             </button>
-            <button class="nav-tab" onclick="showSection('simulasi')">
-                <i class="fas fa-microchip"></i> Simulasi CPU
+            <button class="nav-tab" onclick="showSection('bacaan2')">
+                <i class="fas fa-project-diagram"></i> Bacaan 2
             </button>
-            <button class="nav-tab" onclick="showSection('latihan')">
-                <i class="fas fa-tasks"></i> Latihan Soal
+            <button class="nav-tab" onclick="showSection('bacaan3')">
+                <i class="fas fa-sort"></i> Bacaan 3
+            </button>
+            <button class="nav-tab" onclick="showSection('bacaan4')">
+                <i class="fas fa-microchip"></i> Bacaan 4
+            </button>
+            <button class="nav-tab" onclick="showSection('evaluasi')">
+                <i class="fas fa-tasks"></i> Evaluasi
             </button>
         </div>
 
-        <div id="materi" class="content-section active">
+        <!-- BACAAN 1: Keterampilan Generik -->
+        <div id="bacaan1" class="content-section active">
             <div class="material-card">
                 <div class="material-header">
-                    <i class="fas fa-microchip"></i> Arsitektur CPU
+                    <i class="fas fa-users"></i> Bacaan 1: Keterampilan Generik dalam Pembuatan Presentasi
                 </div>
                 <div class="material-body">
-                    <h3>Komponen Utama CPU:</h3>
-                    <div class="components-list">
-                        <div class="component">
-                            <h4><i class="fas fa-cogs"></i> Control Unit (CU)</h4>
-                            <p>Mengatur dan mengendalikan semua operasi dalam CPU. CU membaca instruksi dari memori, menerjemahkannya, dan mengatur eksekusi oleh komponen lain.</p>
+                    <div class="simulation-container">
+                        <h3>Simulasi Kolaborasi Tim</h3>
+                        <p>Sebuah kelompok siswa terdiri dari 4 orang sedang mengembangkan presentasi tentang "Sejarah Perkembangan Komputer"</p>
+                        
+                        <div class="team-simulation">
+                            <div class="team-member" id="andi">
+                                <div class="member-avatar">A</div>
+                                <h4>Andi</h4>
+                                <p>Ketua & Penulis Naskah</p>
+                                <div class="member-status">Status: Menunggu</div>
+                            </div>
+                            <div class="team-member" id="budi">
+                                <div class="member-avatar">B</div>
+                                <h4>Budi</h4>
+                                <p>Pengumpul Gambar & Video</p>
+                                <div class="member-status">Status: Menunggu</div>
+                            </div>
+                            <div class="team-member" id="citra">
+                                <div class="member-avatar">C</div>
+                                <h4>Citra</h4>
+                                <p>Desainer Slide</p>
+                                <div class="member-status">Status: Menunggu</div>
+                            </div>
+                            <div class="team-member" id="dedi">
+                                <div class="member-avatar">D</div>
+                                <h4>Dedi</h4>
+                                <p>Presenter</p>
+                                <div class="member-status">Status: Menunggu</div>
+                            </div>
                         </div>
-                        <div class="component">
-                            <h4><i class="fas fa-calculator"></i> Arithmetic Logic Unit (ALU)</h4>
-                            <p>Melakukan operasi aritmetika (+, -, *, /) dan operasi logika (AND, OR, NOT). ALU adalah "otak" matematika dari komputer.</p>
+
+                        <div class="simulation-controls">
+                            <button class="btn btn-step" onclick="runTeamSimulation()">
+                                <i class="fas fa-play"></i> Jalankan Simulasi
+                            </button>
+                            <button class="btn btn-reset" onclick="resetTeamSimulation()">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
                         </div>
-                        <div class="component">
-                            <h4><i class="fas fa-memory"></i> Register</h4>
-                            <p>Penyimpanan sementara yang sangat cepat di dalam CPU. Register menyimpan data dan instruksi yang sedang diproses.</p>
+
+                        <div class="simulation-status">
+                            <div id="teamStatus" class="status-message">Klik "Jalankan Simulasi" untuk melihat proses kolaborasi tim</div>
                         </div>
-                        <div class="component">
-                            <h4><i class="fas fa-hdd"></i> Memori Utama (RAM)</h4>
-                            <p>Menyimpan data dan instruksi yang sedang digunakan CPU. Lebih cepat dari memori sekunder tetapi volatile (hilang saat daya mati).</p>
+                    </div>
+
+                    <div class="question">
+                        <p class="question-text">Berdasarkan studi kasus di atas, manakah pernyataan yang BENAR tentang keterampilan generik?</p>
+                        <div class="options-container">
+                            <div class="option" onclick="selectMultipleOption(this, 'soal1')">
+                                <div class="option-label">A</div>
+                                <div>Pembagian tugas sesuai keahlian merupakan contoh kolaborasi</div>
+                            </div>
+                            <div class="option" onclick="selectMultipleOption(this, 'soal1')">
+                                <div class="option-label">B</div>
+                                <div>Andi sebagai ketua kelompok bertanggung jawab atas perencanaan</div>
+                            </div>
+                            <div class="option" onclick="selectMultipleOption(this, 'soal1')">
+                                <div class="option-label">C</div>
+                                <div>Presentasi yang dibuat hanya perlu fokus pada tampilan visual</div>
+                            </div>
+                            <div class="option" onclick="selectMultipleOption(this, 'soal1')">
+                                <div class="option-label">D</div>
+                                <div>Dedi sebagai presenter termasuk dalam mengkomunikasikan hasil</div>
+                            </div>
+                            <div class="option" onclick="selectMultipleOption(this, 'soal1')">
+                                <div class="option-label">E</div>
+                                <div>Membuat jadwal pengerjaan termasuk dalam perencanaan kerja</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-check" onclick="checkAnswer('soal1', [0,1,3,4])">
+                            <i class="fas fa-check"></i> Periksa Jawaban
+                        </button>
+                        <div class="explanation" id="explanationSoal1">
+                            <strong>Pembahasan:</strong><br>
+                            Pernyataan C salah karena presentasi perlu mempertimbangkan konten dan struktur, bukan hanya tampilan visual. Pernyataan A, B, D, dan E benar karena mencerminkan prinsip kolaborasi, kepemimpinan, komunikasi, dan perencanaan dalam tim.
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- BACAAN 2: Struktur Data -->
+        <div id="bacaan2" class="content-section">
             <div class="material-card">
                 <div class="material-header">
-                    <i class="fas fa-code"></i> Instruksi Dasar CPU
+                    <i class="fas fa-project-diagram"></i> Bacaan 2: Struktur Data dalam Kehidupan Sehari-hari
                 </div>
                 <div class="material-body">
-                    <h3>Jenis Instruksi:</h3>
-                    <ul>
-                        <li><strong>LOAD</strong> - Memindahkan data dari memori ke register</li>
-                        <li><strong>STORE</strong> - Memindahkan data dari register ke memori</li>
-                        <li><strong>ADD/SUB</strong> - Menambah/mengurangi nilai di register</li>
-                        <li><strong>MULT/DIV</strong> - Mengalikan/membagi nilai di register</li>
-                        <li><strong>JUMP</strong> - Melompat ke instruksi tertentu</li>
-                    </ul>
-                    
-                    <h3>Siklus Instruksi:</h3>
-                    <ol>
-                        <li><strong>Fetch</strong> - Mengambil instruksi dari memori</li>
-                        <li><strong>Decode</strong> - Menerjemahkan instruksi</li>
-                        <li><strong>Execute</strong> - Menjalankan instruksi</li>
-                        <li><strong>Store</strong> - Menyimpan hasil</li>
-                    </ol>
+                    <div class="simulation-container">
+                        <h3>Simulasi Struktur Data</h3>
+                        <p>Pasangkan kegiatan dengan struktur data yang sesuai:</p>
+                        
+                        <div class="structure-visual">
+                            <div class="structure-item" id="stackItem">
+                                <div class="structure-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h4>Stack</h4>
+                                <p>LIFO (Last In First Out)</p>
+                                <div class="structure-examples">
+                                    <small>Contoh: Menumpuk piring, Tombol undo/redo</small>
+                                </div>
+                            </div>
+                            
+                            <div class="structure-item" id="queueItem">
+                                <div class="structure-icon">
+                                    <i class="fas fa-stream"></i>
+                                </div>
+                                <h4>Queue</h4>
+                                <p>FIFO (First In First Out)</p>
+                                <div class="structure-examples">
+                                    <small>Contoh: Antrian loket, Pencetakan dokumen</small>
+                                </div>
+                            </div>
+                            
+                            <div class="structure-item" id="arrayItem">
+                                <div class="structure-icon">
+                                    <i class="fas fa-list"></i>
+                                </div>
+                                <h4>Array</h4>
+                                <p>Penyimpanan data terstruktur</p>
+                                <div class="structure-examples">
+                                    <small>Contoh: Daftar belanja, Nilai siswa</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="simulation-controls">
+                            <button class="btn" onclick="showStructureExamples()">
+                                <i class="fas fa-eye"></i> Lihat Contoh
+                            </button>
+                            <button class="btn" onclick="resetStructureSimulation()">
+                                <i class="fas fa-sync"></i> Reset
+                            </button>
+                        </div>
+
+                        <div class="simulation-status">
+                            <div id="structureStatus" class="status-message">Klik "Lihat Contoh" untuk melihat penerapan struktur data</div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <p class="question-text">Pasangkan kegiatan berikut dengan struktur data yang sesuai!</p>
+                        <div class="matching-container">
+                            <div class="matching-item">
+                                <span>Menumpuk piring di restoran</span>
+                                <select onchange="checkMatching(this, 'stack')">
+                                    <option value="">Pilih</option>
+                                    <option value="stack">Stack</option>
+                                    <option value="queue">Queue</option>
+                                    <option value="array">Array</option>
+                                </select>
+                            </div>
+                            <div class="matching-item">
+                                <span>Antrian di loket tiket</span>
+                                <select onchange="checkMatching(this, 'queue')">
+                                    <option value="">Pilih</option>
+                                    <option value="stack">Stack</option>
+                                    <option value="queue">Queue</option>
+                                    <option value="array">Array</option>
+                                </select>
+                            </div>
+                            <div class="matching-item">
+                                <span>Tombol undo/redo di aplikasi</span>
+                                <select onchange="checkMatching(this, 'stack')">
+                                    <option value="">Pilih</option>
+                                    <option value="stack">Stack</option>
+                                    <option value="queue">Queue</option>
+                                    <option value="array">Array</option>
+                                </select>
+                            </div>
+                            <div class="matching-item">
+                                <span>Daftar belanja di toko</span>
+                                <select onchange="checkMatching(this, 'array')">
+                                    <option value="">Pilih</option>
+                                    <option value="stack">Stack</option>
+                                    <option value="queue">Queue</option>
+                                    <option value="array">Array</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-check" onclick="checkAllMatching()">
+                            <i class="fas fa-check"></i> Periksa Semua
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="simulasi" class="content-section">
+        <!-- BACAAN 3: Sorting dan Searching -->
+        <div id="bacaan3" class="content-section">
             <div class="material-card">
                 <div class="material-header">
-                    <i class="fas fa-play-circle"></i> Simulasi Eksekusi Program CPU
+                    <i class="fas fa-sort"></i> Bacaan 3: Analisis Sorting Sederhana
                 </div>
                 <div class="material-body">
-                    <div class="cpu-simulation">
-                        <h3>Program Sederhana:</h3>
+                    <div class="simulation-container">
+                        <h3>Simulasi Insertion Sort</h3>
+                        <p>Data nilai ulangan: [70, 85, 60, 90, 75]</p>
+                        
+                        <div class="sorting-visual" id="sortingVisual">
+                            <div class="number-box" data-value="70">70</div>
+                            <div class="number-box" data-value="85">85</div>
+                            <div class="number-box" data-value="60">60</div>
+                            <div class="number-box" data-value="90">90</div>
+                            <div class="number-box" data-value="75">75</div>
+                        </div>
+
+                        <div class="simulation-controls">
+                            <button class="btn btn-step" onclick="nextSortingStep()">
+                                <i class="fas fa-forward"></i> Step Berikutnya
+                            </button>
+                            <button class="btn btn-reset" onclick="resetSorting()">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                            <button class="btn" onclick="runAllSorting()">
+                                <i class="fas fa-play"></i> Jalankan Semua
+                            </button>
+                        </div>
+
+                        <div class="simulation-status">
+                            <div id="sortingStatus" class="status-message">Klik "Step Berikutnya" untuk melihat proses Insertion Sort</div>
+                            <div id="comparisonCount">Perbandingan: 0</div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <p class="question-text">Analisis algoritma sorting dan searching:</p>
+                        <div class="program-code">
+                            <div>Data: [70, 85, 60, 90, 75]</div>
+                            <div>Insertion Sort - 3 iterasi pertama:</div>
+                            <div>Iterasi 1: [70, 85, 60, 90, 75]</div>
+                            <div>Iterasi 2: [70, 85, 60, 90, 75]</div>
+                            <div>Iterasi 3: [60, 70, 85, 90, 75]</div>
+                            <div style="margin-top: 10px;">Linear Search nilai 75: 3 perbandingan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACAAN 4: Sistem Komputer -->
+        <div id="bacaan4" class="content-section">
+            <div class="material-card">
+                <div class="material-header">
+                    <i class="fas fa-microchip"></i> Bacaan 4: Sistem Komputer Sederhana
+                </div>
+                <div class="material-body">
+                    <div class="simulation-container">
+                        <h3>Simulasi Eksekusi Program CPU</h3>
+                        
                         <div class="program-code">
                             <div class="code-line" id="line1">
                                 <span class="line-number">1</span>
@@ -597,11 +982,7 @@
                             </div>
                         </div>
 
-                        <div class="simulation-status">
-                            <div id="statusMessage" class="status-message">Klik "Jalankan Step" untuk memulai simulasi</div>
-                        </div>
-
-                        <div class="cpu-diagram">
+                        <div class="cpu-simulation">
                             <div class="cpu-components">
                                 <div class="component" id="cuComponent">
                                     <h3><i class="fas fa-cogs"></i> Control Unit</h3>
@@ -644,13 +1025,10 @@
                                         <div class="memory-value">0</div>
                                     </div>
                                 </div>
-                                <p style="margin-top: 15px; font-size: 0.9em; color: var(--gray);">
-                                    M1, M2, M3 adalah lokasi memori yang menyimpan data
-                                </p>
                             </div>
                         </div>
 
-                        <div class="control-panel">
+                        <div class="simulation-controls">
                             <button class="btn btn-step" onclick="executeStep()" id="stepBtn">
                                 <i class="fas fa-forward"></i> Jalankan Step
                             </button>
@@ -662,142 +1040,256 @@
                             </button>
                         </div>
 
-                        <div class="explanation-box">
-                            <h4><i class="fas fa-lightbulb"></i> Penjelasan Proses:</h4>
-                            <div id="processExplanation">
-                                Program akan mengeksekusi instruksi satu per satu. Setiap step menunjukkan bagaimana CPU memproses data.
-                            </div>
+                        <div class="simulation-status">
+                            <div id="cpuStatus" class="status-message">Klik "Jalankan Step" untuk memulai simulasi</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="material-card">
-                <div class="material-header">
-                    <i class="fas fa-question-circle"></i> Pemahaman Konsep
-                </div>
-                <div class="material-body">
-                    <h3>Jelaskan dengan kata-kata sederhana:</h3>
-                    <div class="concept-questions">
-                        <div class="question">
-                            <p><strong>Apa fungsi Control Unit?</strong></p>
-                            <textarea class="answer-input" rows="2" placeholder="Tulis jawaban Anda di sini..."></textarea>
-                        </div>
-                        <div class="question">
-                            <p><strong>Apa fungsi ALU?</strong></p>
-                            <textarea class="answer-input" rows="2" placeholder="Tulis jawaban Anda di sini..."></textarea>
-                        </div>
-                        <div class="question">
-                            <p><strong>Mengapa data perlu disimpan di memori utama?</strong></p>
-                            <textarea class="answer-input" rows="2" placeholder="Tulis jawaban Anda di sini..."></textarea>
-                        </div>
-                    </div>
-                    <button class="btn" style="margin-top: 15px;">
-                        <i class="fas fa-check"></i> Periksa Jawaban
-                    </button>
                 </div>
             </div>
         </div>
 
-        <div id="latihan" class="content-section">
+        <!-- EVALUASI -->
+        <div id="evaluasi" class="content-section">
             <div class="material-card">
                 <div class="material-header">
-                    <i class="fas fa-tasks"></i> Latihan Soal CPU
+                    <i class="fas fa-tasks"></i> Evaluasi Akhir
                 </div>
                 <div class="material-body">
                     <div class="question">
-                        <p class="question-text">Diberikan program sederhana berikut:</p>
-                        <div class="program-code" style="font-size: 0.9em;">
-                            <div>LOAD R1, [M1]   ; M1 = 8</div>
-                            <div>LOAD R2, [M2]   ; M2 = 4</div>
-                            <div>MULT R1, R1, R2 ; Kalikan R1 dengan R2</div>
-                            <div>STORE [M3], R1  ; Simpan hasil ke M3</div>
-                        </div>
-                        
-                        <p style="margin: 15px 0;"><strong>Berapakah nilai akhir yang tersimpan di M3?</strong></p>
-                        
+                        <p class="question-text">Soal 1: Manakah pernyataan yang BENAR tentang keterampilan generik dalam kolaborasi tim?</p>
                         <div class="options-container">
                             <div class="option" onclick="selectOption(this)">
                                 <div class="option-label">A</div>
-                                <div>12</div>
+                                <div>Pembagian tugas sesuai keahlian merupakan contoh kolaborasi</div>
                             </div>
                             <div class="option" onclick="selectOption(this)">
                                 <div class="option-label">B</div>
-                                <div>24</div>
+                                <div>Ketua kelompok bertanggung jawab atas perencanaan</div>
                             </div>
                             <div class="option" onclick="selectOption(this)">
                                 <div class="option-label">C</div>
-                                <div>32</div>
+                                <div>Presenter termasuk dalam mengkomunikasikan hasil</div>
                             </div>
                             <div class="option" onclick="selectOption(this)">
                                 <div class="option-label">D</div>
-                                <div>48</div>
+                                <div>Semua jawaban benar</div>
                             </div>
                         </div>
-                        
-                        <button class="btn btn-check" onclick="checkAnswer()">
-                            <i class="fas fa-check"></i> Periksa Jawaban
-                        </button>
-                        
-                        <div class="explanation">
-                            <strong>Pembahasan:</strong><br>
-                            Program melakukan: 8 × 4 = 32. Jadi nilai akhir di M3 adalah 32.
+                    </div>
+
+                    <div class="question">
+                        <p class="question-text">Soal 2: Struktur data mana yang menggunakan prinsip LIFO?</p>
+                        <div class="options-container">
+                            <div class="option" onclick="selectOption(this)">
+                                <div class="option-label">A</div>
+                                <div>Stack</div>
+                            </div>
+                            <div class="option" onclick="selectOption(this)">
+                                <div class="option-label">B</div>
+                                <div>Queue</div>
+                            </div>
+                            <div class="option" onclick="selectOption(this)">
+                                <div class="option-label">C</div>
+                                <div>Array</div>
+                            </div>
+                            <div class="option" onclick="selectOption(this)">
+                                <div class="option-label">D</div>
+                                <div>Linked List</div>
+                            </div>
                         </div>
                     </div>
+
+                    <button class="btn" style="margin-top: 20px; width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Submit Jawaban
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // State variables for CPU simulation
-        let currentStep = 0;
-        let registers = { R1: 0, R2: 0 };
-        let memory = { M1: 10, M2: 5, M3: 0 };
-        let isRunning = false;
-
-        // Navigation between sections
+        // Navigation
         function showSection(sectionId) {
-            // Hide all sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
-            
-            // Remove active class from all tabs
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
-            // Show selected section and activate tab
             document.getElementById(sectionId).classList.add('active');
             event.target.classList.add('active');
         }
 
-        // CPU Simulation Functions
+        // Bacaan 1: Team Simulation
+        function runTeamSimulation() {
+            const members = ['andi', 'budi', 'citra', 'dedi'];
+            const status = document.getElementById('teamStatus');
+            let step = 0;
+
+            const steps = [
+                "Hari 1: Perencanaan dan pengumpulan materi",
+                "Andi membuat outline presentasi",
+                "Budi mengumpulkan gambar dan video",
+                "Hari 2: Pembuatan slide presentasi", 
+                "Citra mendesain slide presentasi",
+                "Hari 3: Latihan presentasi dan revisi",
+                "Dedi berlatih presentasi",
+                "Tim melakukan revisi final",
+                "Presentasi selesai dibuat!"
+            ];
+
+            const interval = setInterval(() => {
+                if (step >= steps.length) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                status.textContent = steps[step];
+                status.className = "status-message status-load";
+
+                // Activate relevant team member
+                members.forEach(member => {
+                    document.getElementById(member).classList.remove('active');
+                });
+                
+                if (step === 1) document.getElementById('andi').classList.add('active');
+                if (step === 2) document.getElementById('budi').classList.add('active');
+                if (step === 4) document.getElementById('citra').classList.add('active');
+                if (step === 6) document.getElementById('dedi').classList.add('active');
+
+                step++;
+            }, 1500);
+        }
+
+        function resetTeamSimulation() {
+            document.querySelectorAll('.team-member').forEach(member => {
+                member.classList.remove('active');
+            });
+            document.getElementById('teamStatus').textContent = "Klik 'Jalankan Simulasi' untuk melihat proses kolaborasi tim";
+        }
+
+        // Bacaan 2: Structure Data Simulation
+        function showStructureExamples() {
+            const status = document.getElementById('structureStatus');
+            const structures = ['stackItem', 'queueItem', 'arrayItem'];
+            let current = 0;
+
+            const examples = [
+                "Stack: Piring terakhir yang ditumpuk akan pertama diambil (LIFO)",
+                "Queue: Orang pertama yang mengantri akan pertama dilayani (FIFO)", 
+                "Array: Daftar belanja menyimpan item dalam urutan tertentu",
+                "Semua struktur data telah ditunjukkan"
+            ];
+
+            const interval = setInterval(() => {
+                structures.forEach(structure => {
+                    document.getElementById(structure).classList.remove('active');
+                });
+
+                if (current < structures.length) {
+                    document.getElementById(structures[current]).classList.add('active');
+                    status.textContent = examples[current];
+                    status.className = "status-message status-calculate";
+                    current++;
+                } else {
+                    status.textContent = examples[3];
+                    clearInterval(interval);
+                }
+            }, 2000);
+        }
+
+        function resetStructureSimulation() {
+            document.querySelectorAll('.structure-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById('structureStatus').textContent = "Klik 'Lihat Contoh' untuk melihat penerapan struktur data";
+        }
+
+        // Bacaan 3: Sorting Simulation
+        let numbers = [70, 85, 60, 90, 75];
+        let sortingStep = 0;
+        let comparisons = 0;
+
+        function nextSortingStep() {
+            const boxes = document.querySelectorAll('.number-box');
+            const status = document.getElementById('sortingStatus');
+            const comparisonElement = document.getElementById('comparisonCount');
+
+            if (sortingStep >= 3) {
+                status.textContent = "Insertion Sort selesai! Data terurut: [60, 70, 75, 85, 90]";
+                return;
+            }
+
+            // Reset all boxes
+            boxes.forEach(box => box.classList.remove('active', 'comparing'));
+
+            sortingStep++;
+            comparisons += sortingStep === 1 ? 1 : 2;
+
+            status.textContent = `Iterasi ${sortingStep}: ${getIterationText(sortingStep)}`;
+            comparisonElement.textContent = `Perbandingan: ${comparisons}`;
+
+            // Visualize current step
+            if (sortingStep === 1) {
+                boxes[0].classList.add('comparing');
+                boxes[1].classList.add('comparing');
+            } else if (sortingStep === 2) {
+                boxes[1].classList.add('comparing');
+                boxes[2].classList.add('comparing');
+            } else if (sortingStep === 3) {
+                boxes[2].classList.add('comparing');
+                boxes[3].classList.add('comparing');
+            }
+        }
+
+        function getIterationText(step) {
+            const iterations = [
+                "[70, 85, 60, 90, 75]",
+                "[70, 85, 60, 90, 75]", 
+                "[60, 70, 85, 90, 75]"
+            ];
+            return iterations[step - 1];
+        }
+
+        function resetSorting() {
+            sortingStep = 0;
+            comparisons = 0;
+            document.querySelectorAll('.number-box').forEach(box => {
+                box.classList.remove('active', 'comparing');
+            });
+            document.getElementById('sortingStatus').textContent = "Klik 'Step Berikutnya' untuk melihat proses Insertion Sort";
+            document.getElementById('comparisonCount').textContent = "Perbandingan: 0";
+        }
+
+        function runAllSorting() {
+            resetSorting();
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => nextSortingStep(), i * 1000);
+            }
+        }
+
+        // Bacaan 4: CPU Simulation
+        let currentStep = 0;
+        let registers = { R1: 0, R2: 0 };
+        let memory = { M1: 10, M2: 5, M3: 0 };
+
         function executeStep() {
             if (currentStep >= 4) {
-                document.getElementById('statusMessage').textContent = "Program telah selesai dieksekusi!";
+                document.getElementById('cpuStatus').textContent = "Program telah selesai dieksekusi!";
                 document.getElementById('stepBtn').disabled = true;
                 return;
             }
 
-            isRunning = true;
             currentStep++;
-            
-            // Reset all active states
             resetActiveStates();
             
-            // Update status message
-            const statusMessage = document.getElementById('statusMessage');
+            const status = document.getElementById('cpuStatus');
             
-            // Execute based on current step
             switch(currentStep) {
                 case 1:
-                    // LOAD R1, [M1]
-                    statusMessage.textContent = "Mengambil instruksi: LOAD R1, [M1]";
-                    statusMessage.className = "status-message status-load";
+                    status.textContent = "Mengambil instruksi: LOAD R1, [M1]";
+                    status.className = "status-message status-load";
                     
-                    // Highlight components
                     document.getElementById('cuComponent').classList.add('executing');
                     document.getElementById('line1').classList.add('executing');
                     
@@ -806,15 +1298,13 @@
                         document.getElementById('r1Value').textContent = registers.R1;
                         document.getElementById('register1').classList.add('active');
                         document.getElementById('memM1').classList.add('accessed');
-                        
-                        statusMessage.textContent = "Data 10 telah dimuat dari M1 ke R1";
+                        status.textContent = "Data 10 telah dimuat dari M1 ke R1";
                     }, 1000);
                     break;
                     
                 case 2:
-                    // LOAD R2, [M2]
-                    statusMessage.textContent = "Mengambil instruksi: LOAD R2, [M2]";
-                    statusMessage.className = "status-message status-load";
+                    status.textContent = "Mengambil instruksi: LOAD R2, [M2]";
+                    status.className = "status-message status-load";
                     
                     document.getElementById('cuComponent').classList.add('executing');
                     document.getElementById('line2').classList.add('executing');
@@ -824,15 +1314,13 @@
                         document.getElementById('r2Value').textContent = registers.R2;
                         document.getElementById('register2').classList.add('active');
                         document.getElementById('memM2').classList.add('accessed');
-                        
-                        statusMessage.textContent = "Data 5 telah dimuat dari M2 ke R2";
+                        status.textContent = "Data 5 telah dimuat dari M2 ke R2";
                     }, 1000);
                     break;
                     
                 case 3:
-                    // ADD R1, R1, R2
-                    statusMessage.textContent = "Mengambil instruksi: ADD R1, R1, R2";
-                    statusMessage.className = "status-message status-calculate";
+                    status.textContent = "Mengambil instruksi: ADD R1, R1, R2";
+                    status.className = "status-message status-calculate";
                     
                     document.getElementById('cuComponent').classList.add('executing');
                     document.getElementById('aluComponent').classList.add('executing');
@@ -841,15 +1329,13 @@
                     setTimeout(() => {
                         registers.R1 = registers.R1 + registers.R2;
                         document.getElementById('r1Value').textContent = registers.R1;
-                        
-                        statusMessage.textContent = `Penambahan selesai: 10 + 5 = ${registers.R1}`;
+                        status.textContent = `Penambahan selesai: 10 + 5 = ${registers.R1}`;
                     }, 1000);
                     break;
                     
                 case 4:
-                    // STORE [M3], R1
-                    statusMessage.textContent = "Mengambil instruksi: STORE [M3], R1";
-                    statusMessage.className = "status-message status-store";
+                    status.textContent = "Mengambil instruksi: STORE [M3], R1";
+                    status.className = "status-message status-store";
                     
                     document.getElementById('cuComponent').classList.add('executing');
                     document.getElementById('line4').classList.add('executing');
@@ -858,8 +1344,7 @@
                         memory.M3 = registers.R1;
                         document.getElementById('memM3').classList.add('active');
                         document.getElementById('memM3').querySelector('.memory-value').textContent = memory.M3;
-                        
-                        statusMessage.textContent = `Hasil ${registers.R1} telah disimpan ke M3`;
+                        status.textContent = `Hasil ${registers.R1} telah disimpan ke M3`;
                         document.getElementById('stepBtn').disabled = true;
                     }, 1000);
                     break;
@@ -867,19 +1352,15 @@
         }
 
         function resetActiveStates() {
-            // Reset all active states
             document.querySelectorAll('.component').forEach(comp => {
                 comp.classList.remove('active', 'executing');
             });
-            
             document.querySelectorAll('.code-line').forEach(line => {
                 line.classList.remove('active', 'executing');
             });
-            
             document.querySelectorAll('.memory-cell').forEach(cell => {
                 cell.classList.remove('active', 'accessed');
             });
-            
             document.querySelectorAll('.register').forEach(reg => {
                 reg.classList.remove('active');
             });
@@ -889,16 +1370,13 @@
             currentStep = 0;
             registers = { R1: 0, R2: 0 };
             memory = { M1: 10, M2: 5, M3: 0 };
-            isRunning = false;
             
-            // Reset UI
             document.getElementById('r1Value').textContent = "0";
             document.getElementById('r2Value').textContent = "0";
             document.getElementById('memM3').querySelector('.memory-value').textContent = "0";
             
-            document.getElementById('statusMessage').textContent = "Simulasi telah direset. Klik 'Jalankan Step' untuk memulai.";
-            document.getElementById('statusMessage').className = "status-message";
-            
+            document.getElementById('cpuStatus').textContent = "Simulasi telah direset. Klik 'Jalankan Step' untuk memulai.";
+            document.getElementById('cpuStatus').className = "status-message";
             document.getElementById('stepBtn').disabled = false;
             
             resetActiveStates();
@@ -906,17 +1384,12 @@
 
         function runFullProgram() {
             resetSimulation();
-            
-            // Disable buttons during execution
             document.getElementById('stepBtn').disabled = true;
             document.getElementById('runBtn').disabled = true;
             
-            // Execute all steps with delays
             for (let i = 1; i <= 4; i++) {
                 setTimeout(() => {
                     executeStep();
-                    
-                    // Re-enable buttons after last step
                     if (i === 4) {
                         setTimeout(() => {
                             document.getElementById('runBtn').disabled = false;
@@ -926,44 +1399,56 @@
             }
         }
 
-        // Quiz Functions
+        // Question Handling
+        function selectMultipleOption(optionElement, questionId) {
+            optionElement.classList.toggle('selected');
+        }
+
         function selectOption(optionElement) {
-            // Remove selected class from all options
-            document.querySelectorAll('.option').forEach(opt => {
+            optionElement.parentElement.querySelectorAll('.option').forEach(opt => {
                 opt.classList.remove('selected');
             });
-            
-            // Add selected class to clicked option
             optionElement.classList.add('selected');
         }
 
-        function checkAnswer() {
-            const selectedOption = document.querySelector('.option.selected');
-            if (!selectedOption) {
-                alert('Pilih jawaban terlebih dahulu!');
-                return;
-            }
-            
-            const explanation = document.querySelector('.explanation');
+        function checkAnswer(questionId, correctAnswers) {
+            const explanation = document.getElementById('explanation' + questionId.charAt(0).toUpperCase() + questionId.slice(1));
             explanation.classList.add('show');
-            
-            // Check if answer is correct (C is correct)
-            if (selectedOption.querySelector('.option-label').textContent === 'C') {
-                selectedOption.classList.add('correct');
+        }
+
+        function checkMatching(selectElement, correctValue) {
+            if (selectElement.value === correctValue) {
+                selectElement.parentElement.style.background = '#e8f6ef';
+                selectElement.parentElement.style.borderColor = '#27ae60';
             } else {
-                selectedOption.classList.add('incorrect');
-                // Also show correct answer
-                document.querySelectorAll('.option').forEach(opt => {
-                    if (opt.querySelector('.option-label').textContent === 'C') {
-                        opt.classList.add('correct');
-                    }
-                });
+                selectElement.parentElement.style.background = '#fdedec';
+                selectElement.parentElement.style.borderColor = '#e74c3c';
             }
         }
 
-        // Initialize the page
+        function checkAllMatching() {
+            document.querySelectorAll('.matching-item select').forEach(select => {
+                const correctValues = {
+                    'Menumpuk piring di restoran': 'stack',
+                    'Antrian di loket tiket': 'queue',
+                    'Tombol undo/redo di aplikasi': 'stack',
+                    'Daftar belanja di toko': 'array'
+                };
+                
+                const itemText = select.parentElement.querySelector('span').textContent;
+                if (select.value === correctValues[itemText]) {
+                    select.parentElement.style.background = '#e8f6ef';
+                    select.parentElement.style.borderColor = '#27ae60';
+                } else {
+                    select.parentElement.style.background = '#fdedec';
+                    select.parentElement.style.borderColor = '#e74c3c';
+                }
+            });
+        }
+
+        // Initialize
         window.onload = function() {
-            showSection('materi');
+            showSection('bacaan1');
         };
     </script>
 </body>
